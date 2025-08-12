@@ -1,0 +1,57 @@
+<!-- components/property-list/property-list.component.html -->
+<div class="property-container">
+  <ng-container *ngIf="loading$ | async; else content">
+    <div class="loading">Loading properties...</div>
+  </ng-container>
+
+  <ng-template #content>
+    <ng-container *ngIf="error$ | async as error; else propertyList">
+      <div class="error">{{ error }}</div>
+    </ng-container>
+
+    <ng-template #propertyList>
+      <ng-container *ngFor="let property of properties$ | async">
+        <div class="property-card">
+          <div 
+            class="property-header" 
+            (click)="onToggleProperty(property.id)"
+          >
+            <h2>{{ property.name }}</h2>
+            <span>{{ property.expanded ? '−' : '+' }}</span>
+          </div>
+          
+          <div *ngIf="property.expanded" class="property-details">
+            <div class="features-section">
+              <h3>Features</h3>
+              <ul>
+                <li *ngFor="let feature of property.features">{{ feature }}</li>
+              </ul>
+            </div>
+            
+            <div class="highlights-section">
+              <h3>Highlights</h3>
+              <ul>
+                <li *ngFor="let highlight of property.highlights">{{ highlight }}</li>
+              </ul>
+            </div>
+            
+            <div class="transportation-section">
+              <h3>Transportation</h3>
+              <ul>
+                <li *ngFor="let transport of property.transportation">{{ transport }}</li>
+              </ul>
+            </div>
+            
+            <div class="spaces-section">
+              <h3>Spaces</h3>
+              <app-space-list 
+                [spaces]="property.spaces" 
+                [propertyId]="property.id">
+              </app-space-list>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+  </ng-template>
+</div>

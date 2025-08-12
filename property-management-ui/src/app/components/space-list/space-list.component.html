@@ -1,0 +1,30 @@
+<!-- components/space-list/space-list.component.html -->
+<div class="space-list">
+  <div *ngFor="let space of spaces" class="space-card">
+    <div 
+      class="space-header" 
+      (click)="onToggleSpace(space.id)"
+    >
+      <h4>{{ space.name }}</h4>
+      <span>{{ space.expanded ? '−' : '+' }}</span>
+    </div>
+    
+    <div *ngIf="space.expanded" class="rentroll-details">
+      <h5>Rent Roll</h5>
+      <table>
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rent of space.rentRoll">
+            <td>{{ rent.month }}</td>
+            <td>${{ rent.amount | number }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
